@@ -19,6 +19,7 @@ I'll try to update this as soon as I can.
 - [x] Automatically get screen size
 - [x] Add compensation for locked and unlocked screen ([EXPERIMENTAL, READ THIS](https://github.com/ih1115/Cheatrite/blob/master/README.md#experimental))
 - [x] Add correct maximum range for aimbot so it doesn't go out of game screen when using multiple monitors
+- [x] Add a configuration file
 - [ ] Add more smooth aim to look less suspicious
 - [ ] Add aim prediction
 - [ ] Draw a map overlay to the window to show location of people in FoW
