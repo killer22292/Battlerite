@@ -10,6 +10,7 @@
 #include <Core\MemoryManager.h>
 #include <Core\MouseManager.hpp>
 #include <Core\Offsets.hpp>
+#include <Core\Config.h>
 
 using namespace std;
 
@@ -28,6 +29,12 @@ public:
 	~Cheatrite();
 
 	void run();
+	void save();
+	void loadConfig();
 private:
 	string champion;
+	bool autoSaveConfig;
+	int offset = 50;
+	bool enableAimbot;
+	bool enableScripts;
 };
