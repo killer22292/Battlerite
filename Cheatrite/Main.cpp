@@ -13,7 +13,6 @@ int main() {
 		cout << "Available champions: Ashka, Jade, Pearl, Ezmo, Raigon" << endl;
 		cout << "Note: Champion names are case sensitive (for now)." << endl;
 		cin >> selectedchamp;
-		cout << endl;
 	}
 
 	Cheatrite Cheatrite(selectedchamp);
