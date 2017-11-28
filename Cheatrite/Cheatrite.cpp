@@ -3,6 +3,8 @@
 Cheatrite::Cheatrite(string champ)
 {
 	this->champion = champ;
+	Config::LoadConfig();
+	loadConfig();
 }
 
 Cheatrite::~Cheatrite()
@@ -13,10 +15,7 @@ void Cheatrite::run()
 {
 	bool pageUpPressed = false;
 	bool pageDownPressed = false;
-	int offset = 50;
 	bool controlPressed = false;
-	bool enableAimbot = true;
-	bool enableScripts = true;
 	bool capsPressed = false;
 
 	// EXPERIMENTAL
@@ -38,8 +37,11 @@ void Cheatrite::run()
 
 	cout << "Window found!" << endl << endl;
 
-	PlayerInformation playerInformation[20];
+	cout << "Aimbot enabled: " << enableAimbot << endl;
+	cout << "Aim Offset: " << offset << endl;
+	cout << "Scripts enabled: " << enableScripts << endl;
 
+	PlayerInformation playerInformation[20];
 
 	while (window.WindowExists())
 	{
@@ -55,11 +57,13 @@ void Cheatrite::run()
 				if (cameraLocked)
 				{
 					offset = offset + 34;
+					cout << "Aim Offset: " << offset << endl;
 					cameraLocked = false;
 				}
 				else
 				{
 					offset = offset - 34;
+					cout << "Aim Offset: " << offset << endl;
 					cameraLocked = true;
 				}
 			}
@@ -75,6 +79,7 @@ void Cheatrite::run()
 			{
 				capsPressed = true;
 				enableScripts = !enableScripts;
+				cout << "Scripts enabled: " << enableScripts << endl;
 			}
 		}
 		else
@@ -88,6 +93,7 @@ void Cheatrite::run()
 			{
 				controlPressed = true;
 				enableAimbot = !enableAimbot;
+				cout << "Aimbot enabled: " << enableAimbot << endl;
 			}
 		}
 		else
@@ -101,6 +107,8 @@ void Cheatrite::run()
 			{
 				pageDownPressed = true;
 				offset--;
+				cout << "Aim Offset: " << offset << endl;
+				save();
 			}
 		}
 		else {
@@ -113,6 +121,8 @@ void Cheatrite::run()
 			{
 				pageUpPressed = true;
 				offset++;
+				cout << "Aim Offset: " << offset << endl;
+				save();
 			}
 		}
 		else
@@ -668,4 +678,26 @@ void Cheatrite::run()
 			}
 		}
 	}
+	if (!autoSaveConfig) {
+		cout << "Would you like to save your settings? (Y/N)" << endl;
+		string answer;
+		cin >> answer;
+		if (answer == "Y" || answer == "y")
+		{
+			save();
+		}
+	}
+}
+
+void Cheatrite::save()
+{
+	Config::SetValue("AIMBOT", "aimOffset", to_string(offset));
+}
+
+void Cheatrite::loadConfig()
+{
+	this->autoSaveConfig = (Config::GetValue("GENERAL", "autoSave") == "true" ? true : false);
+	this->offset = stoi(Config::GetValue("AIMBOT", "aimOffset"));
+	this->enableAimbot = (Config::GetValue("AIMBOT", "aimbotAutoEnable") == "true" ? true : false);
+	this->enableScripts = (Config::GetValue("SCRIPTS", "scriptsAutoEnable") == "true" ? true : false);
 }
